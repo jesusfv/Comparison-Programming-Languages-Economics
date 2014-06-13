@@ -6,9 +6,15 @@
 
 This folder slightly changes the Julia code for [A Comparison of Programming Languages in Economics](http://economics.sas.upenn.edu/~jesusfv/comparison_languages.pdf)
 
+The folder contains
+* `main.jl`: the main routine. the user should execute that file line by line in the REPL
+* `model.jl`: the definition of my custom data type. Basically defines the model objects
+* `RBCmodule.jl`: a Julia module that loads `model.jl`. makes it easier to develop code in the REPL.
+
 ## Author
 
-florian.oswald@gmail.com
+github: floswald
+email: florian.oswald@gmail.com
 
 ## My Changes
 

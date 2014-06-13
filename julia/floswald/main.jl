@@ -25,7 +25,7 @@ withTypes = @elapsed RBCmod.compute(m)
 
 
 # compare that with Jesus' version
-include("RBC_Julia.jl")
+include("../../RBC_Julia.jl")
 noTypes = @elapsed main()
 # do it twice to be fair to the JIT
 noTypes = @elapsed main()
