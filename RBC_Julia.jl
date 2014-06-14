@@ -4,7 +4,31 @@
 # Haverford, July 29, 2013
 
 function main()
+    
+    # define types
+    # types are not needed but they improve performance considerably
 
+    aalpha :: Float64
+    bbeta  :: Float64
+
+    vProductivity ::Array{Float64,2}
+    mTransition   ::Array{Float64,2}
+
+    capitalSteadyState     :: Float64
+    outputSteadyState      :: Float64
+    consumptionSteadyState :: Float64
+
+    vGridCapital :: Array{Float64,1}
+
+    nGridCapital :: Int64
+    nGridProductivity :: Int64
+
+    mOutput               :: Array{Float64,2}
+    mValueFunction        :: Array{Float64,2}
+    mValueFunctionNew     :: Array{Float64,2}
+    mPolicyFunction       :: Array{Float64,2}
+    expectedValueFunction :: Array{Float64,2}
+    
     ##  1. Calibration
 
     aalpha = 1/3     # Elasticity of output w.r.t. capital
