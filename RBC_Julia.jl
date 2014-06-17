@@ -88,8 +88,11 @@ function main()
         end
 
         maxDifference  = maximum(abs(mValueFunctionNew-mValueFunction))
-        mValueFunction    = mValueFunctionNew
-        mValueFunctionNew = zeros(nGridCapital,nGridProductivity)
+
+        # Swap value functions
+        tempVar             = mValueFunction
+        mValueFunction      = mValueFunctionNew
+        mValueFunctionNew   = tempVar
 
         iteration = iteration+1
         if mod(iteration,10)==0 || iteration == 1
