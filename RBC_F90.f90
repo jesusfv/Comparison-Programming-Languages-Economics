@@ -11,13 +11,11 @@ program RBC_F90
  
   implicit none
   
-  
-  real time_begin, time_end	
   integer,  parameter :: nGridCapital = 17820
   integer,  parameter :: nGridProductivity = 5
   
   real(8),  parameter :: tolerance = 0.0000001
-  real time_begin, time_end	
+  real :: time_begin, time_end	
 
   integer :: nCapital, nCapitalNextPeriod, gridCapitalNextPeriod, nProductivity, nProductivityNextPeriod 
   integer :: iteration
@@ -141,7 +139,7 @@ program RBC_F90
   print *, 'My check:', mPolicyFunction(1000,3)
   print *, ' '
 
-  call CPU_TIME ( time_end )
+  call CPU_TIME (time_end)
   print *, 'Elapsed time is ', time_end - time_begin
 
 end program RBC_F90
