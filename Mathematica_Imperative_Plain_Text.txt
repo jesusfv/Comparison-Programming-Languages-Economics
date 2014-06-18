@@ -1,0 +1,113 @@
+Clear["Global`*"]
+
+Timing[
+ (* 1. Calibration*)
+ 
+ \[Alpha] = 0.333333333333;
+ \[Beta] = 0.95;
+ 
+ (* Productivity values*)
+ 
+ vProductivity = {0.9792, 0.9896, 1.0000, 1.0106, 1.0212};
+ 
+ (* Transition matrix *)
+ 
+ mTransition = {{0.9727, 0.0273, 0.0000, 0.0000, 0.0000},
+   {0.0041, 0.9806, 0.0153, 0.0000, 0.0000},
+   {0.0000, 0.0082, 0.9837, 0.0082, 0.0000},
+   {0.0000, 0.0000, 0.0153, 0.9806, 0.0041},
+   {0.0000, 0.0000, 0.0000, 0.0273, 0.9727}};
+ 
+ (* 2. Steady State*)
+ 
+ Subscript[k, ss] = (\[Alpha]*\[Beta])^(1/(1 - \[Alpha]));
+   Subscript[y, ss] = Subscript[k, ss]^\[Alpha];
+   Subscript[c, ss] = Subscript[y, ss] - Subscript[k, ss];
+ 
+ (* We generate the grid of capital*)
+ 
+ vGridCapital = 
+  Range[0.089099143696263, 1.5*Subscript[k, ss], 0.00001];
+ nGridCapital = Length[vGridCapital];
+    nGridProductivity = Length[vProductivity];
+ 
+ (*3. Required matrices and vectors*)
+ 
+   mOutput = ConstantArray[0, {nGridCapital, nGridProductivity}];
+   mValueFunction = 
+  ConstantArray[0, {nGridCapital, nGridProductivity}];
+   mValueFunctionNew = 
+  ConstantArray[0, {nGridCapital, nGridProductivity}];
+   mPolicyFunction = 
+  ConstantArray[0, {nGridCapital, nGridProductivity}]; 
+ expectedValueFunction = 
+  ConstantArray[0, {nGridCapital, nGridProductivity}];
+ 
+ (*4. We pre-build output for each point in the grid*)
+  
+ mOutput = Transpose[{vGridCapital^\[Alpha]}].{vProductivity};
+ 
+ (* 5. Main iteration*)
+ 
+ maxDifference = 10.0;
+   tolerance = 0.0000001;
+   iteration = 0;
+ 
+ While [maxDifference > tolerance,
+  
+  expectedValueFunction = mValueFunction.Transpose[mTransition];
+  
+  For[nProductivity = 1, nProductivity <= nGridProductivity, 
+   nProductivity++,
+   
+   (*We start from previous choice (monotonicity of policy function)*)
+
+      gridCapitalNextPeriod = 1;
+   
+   For [nCapital = 1, nCapital <= nGridCapital, nCapital++,
+    
+    valueHighSoFar = -1000.0;
+    capitalChoice = vGridCapital[[1]];
+    
+    For [nCapitalNextPeriod = gridCapitalNextPeriod, 
+     nCapitalNextPeriod <= nGridCapital, nCapitalNextPeriod++,
+     
+     consumption = 
+      mOutput[[nCapital, nProductivity]] - 
+       vGridCapital[[nCapitalNextPeriod]];
+     	       
+     valueProvisional = (1 - \[Beta])*Log[consumption] + \[Beta]*
+        expectedValueFunction[[nCapitalNextPeriod, nProductivity]];
+     
+     If[valueProvisional > valueHighSoFar,
+                         valueHighSoFar = valueProvisional;
+                         
+      capitalChoice = vGridCapital[[nCapitalNextPeriod]];
+                         gridCapitalNextPeriod = nCapitalNextPeriod;,
+      		 Break[] (*We break when we have achieved the max*)
+      ];
+     
+     ];
+    
+    mValueFunctionNew[[nCapital, nProductivity]] = valueHighSoFar;
+    mPolicyFunction[[nCapital, nProductivity]] = capitalChoice;
+    
+    ];
+   
+   ];
+  
+  maxDifference = Max[Abs[mValueFunctionNew - mValueFunction]];
+  mValueFunction = mValueFunctionNew;
+  
+  iteration = iteration + 1;
+  If[Mod[iteration, 10] == 0 ||  iteration == 1, 
+   Print[StringForm["Iteration = ``, Sup Diff = ``", iteration, 
+     maxDifference]]]
+  
+  ];
+ 
+ Print[StringForm["Iteration = ``, Sup Diff = ``", iteration, 
+   maxDifference]];
+      Print[StringForm["My check = ``", mPolicyFunction[[1000, 3]]]];
+ 
+ ]
