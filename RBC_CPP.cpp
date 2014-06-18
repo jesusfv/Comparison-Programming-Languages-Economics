@@ -4,17 +4,42 @@
 // Date        : July 21, 2013
 //============================================================================
 
+// AUXILIARY TIMER FUNCTIONS
+
 #include <iostream>
 #include <math.h>       // power
 #include <cmath>        // abs
-#include <ctime>        // time
-
 using namespace std;
 
+// The next few lines are just for counting time
+//  Windows
+#ifdef _WIN32
+#include <Windows.h>
+double get_cpu_time(){
+    FILETIME a,b,c,d;
+    if (GetProcessTimes(GetCurrentProcess(),&a,&b,&c,&d) != 0){
+        //  Returns total user time.
+        //  Can be tweaked to include kernel times as well.
+        return
+        (double)(d.dwLowDateTime |
+                 ((unsigned long long)d.dwHighDateTime << 32)) * 0.0000001;
+    }else{
+        //  Handle error
+        return 0;
+    }
+}
+//  Posix/Linux
+#else
+#include <ctime>        // time
+double get_cpu_time(){
+    return (double)clock() / CLOCKS_PER_SEC;
+}
+#endif
+
 int main() {
-
-  clock_t begin = clock();
-
+    
+   double cpu0  = get_cpu_time();
+  
   ///////////////////////////////////////////////////////////////////////////////////////////
   // 1. Calibration
   ///////////////////////////////////////////////////////////////////////////////////////////
@@ -144,10 +169,11 @@ int main() {
   cout <<" \n";
   cout <<"My check = "<< mPolicyFunction[999][2]<<"\n";
   cout <<" \n";
+  
+  double cpu1  = get_cpu_time();
 
-  clock_t end = clock();
-  double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-  cout <<"Elapsed time is "<<elapsed_secs<<" seconds.";
+  cout << "Elapsed time is   = " << cpu1  - cpu0  << endl;
+    
   cout <<" \n";  
 
   return 0;
