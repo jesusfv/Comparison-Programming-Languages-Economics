@@ -89,10 +89,7 @@ function main()
 
         maxDifference  = maximum(abs(mValueFunctionNew-mValueFunction))
 
-        # Swap value functions
-        tempVar             = mValueFunction
-        mValueFunction      = mValueFunctionNew
-        mValueFunctionNew   = tempVar
+        mValueFunction, mValueFunctionNew = mValueFunctionNew, mValueFunction
 
         iteration = iteration+1
         if mod(iteration,10)==0 || iteration == 1
