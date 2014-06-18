@@ -14,7 +14,8 @@ Files:
 12) RBC_R_Compiler.R: R code compiled.
 13) RBC_Mathematica: Mathematica code.
 14) RBC_Mathematica_Imperative: Mathematica code with imperative structure.
-15) RBC_Mathematica_PartialCompilation: Mathematica code with imperative structure and partial compilation..
+15) RBC_Mathematica_PartialCompilation: Mathematica code with imperative structure and partial compilation.
+16) RBC_Mathematica_Plain_Text.tx: Mathematica code in plain text for those without Mathematica.
 
 In all cases with a JIT, you may want to warm up the JIT before testing for speed.
 
