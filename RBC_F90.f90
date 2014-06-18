@@ -5,22 +5,23 @@
 !============================================================================
 
 program RBC_F90
-  
   !----------------------------------------------------------------
   ! 0. variables to be defined
   !----------------------------------------------------------------
-  
+ 
   implicit none
-
+  
+  
+  real time_begin, time_end	
   integer,  parameter :: nGridCapital = 17820
   integer,  parameter :: nGridProductivity = 5
-  real(8),  parameter :: tolerance = 0.0000001
   
+  real(8),  parameter :: tolerance = 0.0000001
+  real time_begin, time_end	
+
   integer :: nCapital, nCapitalNextPeriod, gridCapitalNextPeriod, nProductivity, nProductivityNextPeriod 
   integer :: iteration
         
-  real    :: elapsed(2), total
-
   real(8) :: aalpha, bbeta, capitalSteadyState, outputSteadyState, consumptionSteadyState
   real(8) :: valueHighSoFar, valueProvisional, consumption, capitalChoice	
   real(8) :: maxDifference,diff,diffHighSoFar
@@ -30,6 +31,8 @@ program RBC_F90
   real(8), dimension(nGridCapital) :: vGridCapital
   real(8), dimension(nGridCapital,nGridProductivity) :: mOutput, mValueFunction, mValueFunctionNew, mPolicyFunction
   real(8), dimension(nGridCapital,nGridProductivity) :: expectedValueFunction
+  
+  call CPU_TIME(time_begin)
   
   !----------------------------------------------------------------
   ! 1. Calibration
@@ -138,8 +141,7 @@ program RBC_F90
   print *, 'My check:', mPolicyFunction(1000,3)
   print *, ' '
 
-  total = etime(elapsed)
-
-  print *, 'Elapsed time is ', elapsed(1)
+  call CPU_TIME ( time_end )
+  print *, 'Elapsed time is ', time_end - time_begin
 
 end program RBC_F90
