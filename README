@@ -30,5 +30,4 @@ Compilation flags
 7) Intel compiler: ifortran -o testf -O3 RBC_F90.f90
 8) javac RBC_Java.java and run as java RBC_Java -XX:+AggressiveOpts
 
-
 The main fork will remained basically unchanged to allow researchers to check our basic results.
