@@ -74,7 +74,7 @@ int main() {
   // We generate the grid of capital
   int nCapital, nCapitalNextPeriod, gridCapitalNextPeriod, nProductivity, nProductivityNextPeriod;
   const int nGridCapital = 17820, nGridProductivity = 5;
-  double vGridCapital[nGridCapital];
+  double vGridCapital[nGridCapital] = {0.0};
 
   for (nCapital = 0; nCapital < nGridCapital; ++nCapital){
     vGridCapital[nCapital] = 0.5*capitalSteadyState+0.00001*nCapital;
@@ -82,11 +82,11 @@ int main() {
 
   // 3. Required matrices and vectors
 
-  double mOutput[nGridCapital][nGridProductivity];
-  double mValueFunction[nGridCapital][nGridProductivity];
-  double mValueFunctionNew[nGridCapital][nGridProductivity];
-  double mPolicyFunction[nGridCapital][nGridProductivity];
-  double expectedValueFunction[nGridCapital][nGridProductivity];
+  double mOutput[nGridCapital][nGridProductivity] = {0.0};
+  double mValueFunction[nGridCapital][nGridProductivity] = {0.0};
+  double mValueFunctionNew[nGridCapital][nGridProductivity] = {0.0};
+  double mPolicyFunction[nGridCapital][nGridProductivity]= {0.0};
+  double expectedValueFunction[nGridCapital][nGridProductivity] = {0.0};
 
   // 4. We pre-build output for each point in the grid
 
