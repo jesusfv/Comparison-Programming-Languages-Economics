@@ -19,7 +19,7 @@ basic results.
 ## Files
 
 1. `RBC_CPP.cpp`: C++ code. 
-2. `RBC_CPP_2.cpp`: C++ code, more idiomatic.
+2. `RBC_CPP_2.cpp`: C++ code, more idiomatic but slightly slower.
 3. `RBC_F90.f90`: Fortran code.
 4. `RBC_Java.java`: Java code.
 5. `RBC_Julia.jl`: Julia code, to run RBC_Julia; @time main().
