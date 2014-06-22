@@ -19,35 +19,37 @@ basic results.
 ## Files
 
 1. `RBC_CPP.cpp`: C++ code. 
-2. `RBC_F90.f90`: Fortran code.
-3. `RBC_Java.java`: Java code.
-4. `RBC_Julia.jl`: Julia code, to run RBC_Julia; @time main().
-5. `RBC_Matlab.m`: Matlab code.
-6. `RBC_Matlab_Inside_Loop.m`: Matlab code with Mex file.
-7. `inside_loop_mex.cpp`: Mex file for 5.
-8. `RBC_Python.py`: Python code for CPython and Pypy.
-9. `RBC_Python_Numba.py`: Python code for Numba.
-10. `RBC_R.R`: R code.
-11. `RBC_R_Compiler.R`: R code compiled.
-12. `RBC_Mathematica`: Mathematica code.
-13. `RBC_Mathematica_Imperative`: Mathematica code with imperative structure.
-14. `RBC_Mathematica_PartialCompilation`: Mathematica code with imperative
+2. 'RBC_CPP_2.cpp`: C++ code, more idiomatic.
+3. `RBC_F90.f90`: Fortran code.
+4. `RBC_Java.java`: Java code.
+5. `RBC_Julia.jl`: Julia code, to run RBC_Julia; @time main().
+6. `RBC_Matlab.m`: Matlab code.
+7. `RBC_Matlab_Inside_Loop.m`: Matlab code with Mex file.
+8. `inside_loop_mex.cpp`: Mex file for 5.
+9. `RBC_Python.py`: Python code for CPython and Pypy.
+10. `RBC_Python_Numba.py`: Python code for Numba.
+11. `RBC_R.R`: R code.
+12. `RBC_R_Compiler.R`: R code compiled.
+13. `RBC_Mathematica`: Mathematica code.
+14. `RBC_Mathematica_Imperative`: Mathematica code with imperative structure.
+15. `RBC_Mathematica_PartialCompilation`: Mathematica code with imperative
     structure and partial compilation.
-15. `RBC_Mathematica_Plain_Text.tx`: Mathematica code in plain text for those
+16. `RBC_Mathematica_Plain_Text.tx`: Mathematica code in plain text for those
     without Mathematica.
-16. `RBC_Mathematica_Imperative_Plain_Text.text`: Mathematica code in plain
+17. `RBC_Mathematica_Imperative_Plain_Text.text`: Mathematica code in plain
     text, imperative version.
 
 ## Compilation flags
 
 1. GCC compiler (Mac): `g++ -o testc -O3 RBC_CPP.cpp`
 2. GCC compiler (Windows): `g++ -Wl,--stack,4000000, -o testc -O3 RBC_CPP.cpp`
-3. Clang compiler: `clang++ -o testclang -O3 RBC_CPP.cpp`
-4. Intel compiler: `icpc -o testc -O3 RBC_CPP.cpp`
-5. Visual C: `cl /F 4000000 /o testvcpp /O2 RBC_CPP.cpp`
-6. GCC compiler: `gfortran -o testf -O3 RBC_F90.f90`
-7. Intel compiler: `ifortran -o testf -O3 RBC_F90.f90`
-8. `javac RBC_Java.java` and run as `java RBC_Java -XX:+AggressiveOpts`
+3. GCC compiler (Mac): g++ -o testc -O3 -std=gnu++11 RBC_CPP_2.cpp
+4. Clang compiler: `clang++ -o testclang -O3 RBC_CPP.cpp`
+5. Intel compiler: `icpc -o testc -O3 RBC_CPP.cpp`
+6. Visual C: `cl /F 4000000 /o testvcpp /O2 RBC_CPP.cpp`
+7. GCC compiler: `gfortran -o testf -O3 RBC_F90.f90`
+8. Intel compiler: `ifortran -o testf -O3 RBC_F90.f90`
+9. `javac RBC_Java.java` and run as `java RBC_Java -XX:+AggressiveOpts`
 
 In all cases with a JIT, you may want to warm up the JIT before testing for
 speed.
