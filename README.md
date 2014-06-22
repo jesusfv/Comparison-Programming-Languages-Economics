@@ -43,7 +43,7 @@ basic results.
 
 1. GCC compiler (Mac): `g++ -o testc -O3 RBC_CPP.cpp`
 2. GCC compiler (Windows): `g++ -Wl,--stack,4000000, -o testc -O3 RBC_CPP.cpp`
-3. GCC compiler (Mac): g++ -o testc -O3 -std=gnu++11 RBC_CPP_2.cpp
+3. GCC compiler (Mac): `g++ -o testc -O3 -std=gnu++11 RBC_CPP_2.cpp`
 4. Clang compiler: `clang++ -o testclang -O3 RBC_CPP.cpp`
 5. Intel compiler: `icpc -o testc -O3 RBC_CPP.cpp`
 6. Visual C: `cl /F 4000000 /o testvcpp /O2 RBC_CPP.cpp`
