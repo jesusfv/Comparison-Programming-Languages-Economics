@@ -18,7 +18,7 @@ basic results.
 
 ## Files
 
-1. `RBC_CPP.cpp`: C++ code. 
+1. `RBC_C.c`: C code. 
 2. `RBC_CPP_2.cpp`: C++ code, more idiomatic but slightly slower.
 3. `RBC_F90.f90`: Fortran code.
 4. `RBC_Java.java`: Java code.
@@ -50,6 +50,7 @@ basic results.
 7. GCC compiler: `gfortran -o testf -O3 RBC_F90.f90`
 8. Intel compiler: `ifortran -o testf -O3 RBC_F90.f90`
 9. `javac RBC_Java.java` and run as `java RBC_Java -XX:+AggressiveOpts`
+10. `RBC_C.c` can be compiled in C, C++ and Objective-C: `clang -o testc -x <language> -O3 RBC_C.c` with `<language>` = `c`, `c++` or `objective-c`. Same for GCC.
 
 In all cases with a JIT, you may want to warm up the JIT before testing for
 speed.
