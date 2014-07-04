@@ -5,7 +5,7 @@ cimport cython
 # a loop introduces overhead and so should be avoided.  For scalar mathematical
 # functions, this is simple using the following syntax
 cdef extern from "math.h":
-    float log(float x)
+    double log(double x)
 
 # Cython names are different from Python names for floating point, where float
 # in Python maps to double in Cython (or C).  Using float in Cython is actual a
