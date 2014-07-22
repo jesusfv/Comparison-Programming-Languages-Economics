@@ -19,25 +19,22 @@ basic results.
 ## Files
 
 1. `RBC_C.c`: C code. 
-2. `RBC_CPP_2.cpp`: C++ code, more idiomatic but slightly slower.
-3. `RBC_F90.f90`: Fortran code.
-4. `RBC_Java.java`: Java code.
-5. `RBC_Julia.jl`: Julia code, to run RBC_Julia; @time main().
+2. `RBC_CPP.cpp`: C++ code
+3. `RBC_CPP_2.cpp`: C++ code, more idiomatic but slightly slower.
+4. `RBC_F90.f90`: Fortran code.
+5. `RBC_Java.java`: Java code.
+6. `RBC_Julia.jl`: Julia code, to run RBC_Julia; @time main().
 6. `RBC_Matlab.m`: Matlab code.
-7. `RBC_Matlab_Inside_Loop.m`: Matlab code with Mex file.
-8. `inside_loop_mex.cpp`: Mex file for 5.
-9. `RBC_Python.py`: Python code for CPython and Pypy.
-10. `RBC_Python_Numba.py`: Python code for Numba.
-11. `RBC_R.R`: R code.
-12. `RBC_R_Compiler.R`: R code compiled.
-13. `RBC_Mathematica`: Mathematica code.
-14. `RBC_Mathematica_Imperative`: Mathematica code with imperative structure.
-15. `RBC_Mathematica_PartialCompilation`: Mathematica code with imperative
+8. `RBC_Matlab_Inside_Loop.m`: Matlab code with Mex file.
+9. `inside_loop_mex.cpp`: Mex file for 8.
+10. `RBC_Python.py`: Python code for CPython and Pypy.
+11. `RBC_Python_Numba.py`: Python code for Numba.
+12. `RBC_R.R`: R code.
+13. `RBC_R_Compiler.R`: R code compiled.
+14. `RBC_Mathematica`: Mathematica code.
+15. `RBC_Mathematica_Imperative`: Mathematica code with imperative structure.
+16. `RBC_Mathematica_PartialCompilation`: Mathematica code with imperative
     structure and partial compilation.
-16. `RBC_Mathematica_Plain_Text.tx`: Mathematica code in plain text for those
-    without Mathematica.
-17. `RBC_Mathematica_Imperative_Plain_Text.text`: Mathematica code in plain
-    text, imperative version.
 
 ## Compilation flags
 
