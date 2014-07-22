@@ -31,9 +31,11 @@ basic results.
 11. `RBC_Python_Numba.py`: Python code for Numba.
 12. `RBC_R.R`: R code.
 13. `RBC_R_Compiler.R`: R code compiled.
-14. `RBC_Mathematica`: Mathematica code.
-15. `RBC_Mathematica_Imperative`: Mathematica code with imperative structure.
-16. `RBC_Mathematica_PartialCompilation`: Mathematica code with imperative
+14. `RBC_Rcpp.R`: R code with Rcpp.
+15. `InsideLoop.cpp`: C++ function for Rcpp.
+16. `RBC_Mathematica`: Mathematica code.
+17. `RBC_Mathematica_Imperative`: Mathematica code with imperative structure.
+18. `RBC_Mathematica_PartialCompilation`: Mathematica code with imperative
     structure and partial compilation.
 
 ## Compilation flags
