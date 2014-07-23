@@ -1,3 +1,4 @@
+# Reported times are from function VFI (script) and VFI_comp (compiled)
 VFI <-function(){
   
   ## 0. Housekeeping
