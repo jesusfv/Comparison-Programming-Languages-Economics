@@ -2,7 +2,7 @@
 // Name        : RBC2_C.c
 // Description : Basic RBC model with full depreciation
 // Date        : August 23, 2014
-// Adapted from C++ to C by Luke Hartigan
+// Adapted from C++ to C by Luke Hartigan, luke.hartigan@gmail.com
 //============================================================================
 #include <stdio.h>
 #include <stdlib.h> /* malloc() and free() */
