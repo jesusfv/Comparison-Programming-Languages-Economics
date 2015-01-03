@@ -38,6 +38,7 @@ basic results.
 18. `RBC_Mathematica_PartialCompilation`: Mathematica code with imperative
     structure and partial compilation.
 19. `RBC_CS.cs`: C# code.
+20. 'RBC_JS.js': Javascrip code.
 
 ## Compilation flags
 
