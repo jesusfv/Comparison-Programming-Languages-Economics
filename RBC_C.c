@@ -3,6 +3,7 @@
 // Description : Basic RBC model with full depreciation
 // Date        : July 3, 2014
 // Adapted from C++ to C by Santiago González <sangonz@gmail.com>
+// This can be now compiled as C, C++, or Obejctive-C
 //============================================================================
 
 // AUXILIARY TIMER FUNCTIONS

@@ -1,0 +1,131 @@
+/* Basic RBC model with full depreciation
+
+ Written by Luke Hartigan
+ 
+ luke(dot)hartigan(at)unsw(dot)edu(dot)au
+ 
+ 18-11-2014
+ 
+ Based on codes developed by: Jesus Fernandez-Villaverde
+
+*/
+
+// 0. Housekeeping
+
+new;
+format /m1 /rd 9, 6; 
+cls;
+
+et = hsec;	    // Start timer
+
+//  1. Calibration
+
+aalpha = 1.0/3.0;  // Elasticity of output w.r.t. capital
+bbeta  = 0.95;     // Discount factor
+
+// Productivity values
+vProductivity = {0.9792 0.9896 1.0000 1.0106 1.0212};
+
+// Transition matrix
+mTransition   = {0.9727 0.0273 0.0000 0.0000 0.0000,
+                 0.0041 0.9806 0.0153 0.0000 0.0000,
+                 0.0000 0.0082 0.9837 0.0082 0.0000,
+                 0.0000 0.0000 0.0153 0.9806 0.0041,
+                 0.0000 0.0000 0.0000 0.0273 0.9727};
+
+// 2. Steady State
+
+capitalSteadyState = (aalpha*bbeta)^(1/(1-aalpha));
+outputSteadyState = capitalSteadyState^aalpha;
+consumptionSteadyState = outputSteadyState-capitalSteadyState;
+
+print "";
+print "Output = " outputSteadyState;
+print "Capital = " capitalSteadyState;
+print "Consumption = " consumptionSteadyState;
+print "";
+
+// We generate the grid of capital
+vGridCapital = seqa(0.5*capitalSteadyState, 0.00001, 17820)';
+
+nGridCapital = cols(vGridCapital);
+nGridProductivity = cols(vProductivity);
+
+// 3. Required matrices and vectors
+
+mOutput           = zeros(nGridCapital, nGridProductivity);
+mValueFunction    = zeros(nGridCapital, nGridProductivity);
+mValueFunctionNew = zeros(nGridCapital, nGridProductivity);
+mPolicyFunction   = zeros(nGridCapital, nGridProductivity);
+expectedValueFunction = zeros(nGridCapital, nGridProductivity);
+
+// 4. We pre-build output for each point in the grid
+
+mOutput = (vGridCapital'.^aalpha)*vProductivity;
+
+// 5. Main iteration
+
+maxDifference = 10.0;
+tolerance = 0.0000001;
+iteration = 0;
+
+do while maxDifference > tolerance;
+    
+    expectedValueFunction = mValueFunction*mTransition';
+    
+    for nProductivity (1, nGridProductivity, 1);
+        
+        // We start from previous choice (monotonicity of policy function)
+        gridCapitalNextPeriod = 1;
+        
+        for nCapital (1, nGridCapital, 1);
+                        
+            valueHighSoFar = -1000.0;
+            capitalChoice  = vGridCapital[1];
+            
+            for nCapitalNextPeriod (gridCapitalNextPeriod, nGridCapital, 1);
+                
+                consumption = mOutput[nCapital, nProductivity]-vGridCapital[nCapitalNextPeriod];
+                valueProvisional = (1-bbeta)*ln(consumption)+bbeta*expectedValueFunction[nCapitalNextPeriod, nProductivity];
+            
+                if valueProvisional > valueHighSoFar;
+                    valueHighSoFar = valueProvisional;
+                    capitalChoice = vGridCapital[nCapitalNextPeriod];
+                    gridCapitalNextPeriod = nCapitalNextPeriod;
+                else;
+                    break; // We break when we have achieved the max
+                endif;    
+                  
+            endfor;
+            
+            mValueFunctionNew[nCapital, nProductivity] = valueHighSoFar;
+            mPolicyFunction[nCapital, nProductivity] = capitalChoice;
+            
+        endfor;
+        
+    endfor;
+    
+    maxDifference = maxc(maxc(abs(mValueFunctionNew-mValueFunction)));
+    mValueFunction = mValueFunctionNew;
+    
+    iteration = iteration + 1;
+	
+    if (fmod(iteration, 10) == 0 or iteration == 1);
+        print "Iteration = " iteration;
+		print "Sup Diff = " maxDifference;
+		print "";
+    endif;
+           
+endo;
+
+print "Iteration = " iteration;
+print "Sup Diff = " maxDifference;
+print "";
+
+print "My check = " mPolicyFunction[1000, 3]; 
+
+et = (hsec-et)/100; // Stop timer, convert to seconds
+
+print "Elapse time = " et;
+
+//EOF
