@@ -8,12 +8,15 @@ BASENAME = test
 CFLAGS = -O3
 CPPFLAGS = $(CFLAGS) -std=gnu++11
 OBJFLAGS = $(CFLAGS) -x objective-c
+SWIFTFLAGS = -O -sdk $(shell xcrun --show-sdk-path --sdk macosx)
 
+all: cfamily swift
 cfamily: c cpp objc
 
 c: $(BASENAME)-c-gcc $(BASENAME)-c-clang
 cpp: $(BASENAME)-cpp-gcc $(BASENAME)-cpp-clang
 objc: $(BASENAME)-objc-gcc $(BASENAME)-objc-clang
+swift: $(BASENAME)-swift
 
 $(BASENAME)-c-gcc: RBC_C.c
 	gcc -o $@ $(CFLAGS) $<
@@ -32,6 +35,9 @@ $(BASENAME)-objc-gcc: RBC_C.c
 
 $(BASENAME)-objc-clang: RBC_C.c
 	clang -o $@ $(OBJFLAGS) $<
+	
+$(BASENAME)-swift: RBC_Swift.swift
+	swiftc -o $@ $(SWIFTFLAGS) $< 
 
 clean:
 	rm -f *.o
