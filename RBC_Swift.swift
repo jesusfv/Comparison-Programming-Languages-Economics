@@ -2,7 +2,10 @@
 // Name        : RBC_Swift.swift
 // Description : Basic RBC model with full depreciation
 // Date        : July 4, 2014
-// Santiago González
+// Santiago González <sangonz@gmail.com>
+//
+// This code is for Apple's Swift language
+// Compile: swiftc -O -sdk $(xcrun --show-sdk-path --sdk macosx) RBC_Swift.swift
 //============================================================================
 
 import Foundation
