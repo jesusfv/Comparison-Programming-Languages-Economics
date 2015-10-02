@@ -2,6 +2,7 @@
 #
 # Jesus Fernandez-Villaverde
 # Haverford, July 29, 2013
+using Distances
 
 function main()
     
@@ -29,7 +30,7 @@ function main()
     println("Output = ",outputSteadyState," Capital = ",capitalSteadyState," Consumption = ",consumptionSteadyState)
 
     # We generate the grid of capital
-    vGridCapital = [0.5*capitalSteadyState:0.00001:1.5*capitalSteadyState]
+    vGridCapital = collect(0.5*capitalSteadyState:0.00001:1.5*capitalSteadyState)
 
     nGridCapital = length(vGridCapital)
     nGridProductivity = length(vProductivity)
@@ -52,10 +53,12 @@ function main()
     tolerance = 0.0000001
     iteration = 0
 
-    while(maxDifference > tolerance)
-        expectedValueFunction = mValueFunction*mTransition';
 
-        for nProductivity = 1:nGridProductivity
+    while maxDifference > tolerance
+        fill!(mValueFunctionNew, 0.0)
+        A_mul_Bt!(expectedValueFunction, mValueFunction, mTransition)
+
+        @inbounds for nProductivity = 1:nGridProductivity
         
             # We start from previous choice (monotonicity of policy function)
             gridCapitalNextPeriod = 1
@@ -87,10 +90,8 @@ function main()
         
         end
 
-        maxDifference  = maximum(abs(mValueFunctionNew-mValueFunction))
-        mValueFunction    = mValueFunctionNew
-        mValueFunctionNew = zeros(nGridCapital,nGridProductivity)
-
+        maxDifference  = chebyshev(vec(mValueFunctionNew), vec(mValueFunction))
+        mValueFunction, mValueFunctionNew = mValueFunctionNew, mValueFunction
         iteration = iteration+1
         if mod(iteration,10)==0 || iteration == 1
             println(" Iteration = ", iteration, " Sup Diff = ", maxDifference)
