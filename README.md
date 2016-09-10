@@ -23,7 +23,7 @@ basic results.
 3. `RBC_CPP_2.cpp`: C++ code, more idiomatic but slightly slower.
 4. `RBC_F90.f90`: Fortran code.
 5. `RBC_Java.java`: Java code.
-6. `RBC_Julia.jl`: Julia code, to run RBC_Julia; @time main().
+6. `RBC_Julia.jl`: Julia code, to run `include("RBC_Julia.jl"); @time main()`.
 6. `RBC_Matlab.m`: Matlab code.
 8. `RBC_Matlab_Inside_Loop.m`: Matlab code with Mex file.
 9. `inside_loop_mex.cpp`: Mex file for 8.

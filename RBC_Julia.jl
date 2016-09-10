@@ -29,7 +29,7 @@ function main()
     println("Output = ",outputSteadyState," Capital = ",capitalSteadyState," Consumption = ",consumptionSteadyState)
 
     # We generate the grid of capital
-    vGridCapital = [0.5*capitalSteadyState:0.00001:1.5*capitalSteadyState]
+    vGridCapital = collect(0.5*capitalSteadyState:0.00001:1.5*capitalSteadyState)
 
     nGridCapital = length(vGridCapital)
     nGridProductivity = length(vProductivity)
