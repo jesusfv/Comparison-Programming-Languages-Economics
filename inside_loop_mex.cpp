@@ -13,7 +13,11 @@
 
 /* Include libraries */
 #include <mex.h>        // Always include this header
+
+#ifndef HAVE_OCTAVE
 #include <matrix.h>
+#endif
+
 #include <math.h>       // power
 #include <cmath>        // abs
 #include <ctime>        // time
