@@ -87,7 +87,14 @@ function main()
         
         end
 
-        maxDifference  = maximum(abs(mValueFunctionNew-mValueFunction))
+        maxDifference = -100000.0
+        for i in 1:nGridCapital, j in 1:nGridProductivity
+            diff = abs(mValueFunctionNew[i,j]-mValueFunction[i,j])
+            if diff > maxDifference
+                maxDifference = diff
+            end
+        end
+
         mValueFunction    = mValueFunctionNew
         mValueFunctionNew = zeros(nGridCapital,nGridProductivity)
 
