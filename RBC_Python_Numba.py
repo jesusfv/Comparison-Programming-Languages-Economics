@@ -3,10 +3,12 @@
 # Jesus Fernandez-Villaverde
 # Haverford, July 3, 2013
 
+from __future__ import print_function # Python 2 compatibility
 import numpy as np
 import math
 import time
 from numba import autojit
+from builtins import range # Python 2 compatibility
 
 # - Start Inner Loop - #
 # - bbeta                   float
@@ -21,11 +23,11 @@ from numba import autojit
 @autojit
 def innerloop(bbeta, nGridCapital, gridCapitalNextPeriod, mOutput, nProductivity, vGridCapital, expectedValueFunction, mValueFunction, mValueFunctionNew, mPolicyFunction):
 
-    for nCapital in xrange(nGridCapital):
+    for nCapital in range(nGridCapital):
         valueHighSoFar = -100000.0
         capitalChoice  = vGridCapital[0]
 
-        for nCapitalNextPeriod in xrange(gridCapitalNextPeriod, nGridCapital):
+        for nCapitalNextPeriod in range(gridCapitalNextPeriod, nGridCapital):
             consumption = mOutput[nCapital,nProductivity] - vGridCapital[nCapitalNextPeriod]
             valueProvisional = (1-bbeta)*np.log(consumption)+bbeta*expectedValueFunction[nCapitalNextPeriod,nProductivity];
 
@@ -64,7 +66,7 @@ def main_func():
     outputSteadyState      = capitalSteadyState**aalpha
     consumptionSteadyState = outputSteadyState-capitalSteadyState
 
-    print "Output = ", outputSteadyState, " Capital = ", capitalSteadyState, " Consumption = ", consumptionSteadyState
+    print("Output = ", outputSteadyState, " Capital = ", capitalSteadyState, " Consumption = ", consumptionSteadyState)
 
     # We generate the grid of capital
     vGridCapital           = np.arange(0.5*capitalSteadyState,1.5*capitalSteadyState,0.00001)
@@ -99,7 +101,7 @@ def main_func():
 
         expectedValueFunction = dot(mValueFunction,mTransition.T)
 
-        for nProductivity in xrange(nGridProductivity):
+        for nProductivity in range(nGridProductivity):
 
             # We start from previous choice (monotonicity of policy function)
             gridCapitalNextPeriod = 0
@@ -117,7 +119,7 @@ def main_func():
 
         iteration += 1
         if(iteration%10 == 0 or iteration == 1):
-            print " Iteration = ", iteration, ", Sup Diff = ", maxDifference
+            print(" Iteration = ", iteration, ", Sup Diff = ", maxDifference)
 
     return (maxDifference, iteration, mValueFunction, mPolicyFunction)
 
@@ -128,8 +130,8 @@ if __name__ == '__main__':
     maxDiff, iterate, mValueF, mPolicyFunction = main_func()
     # - End Timer - #
     t2 = time.time()
-    print " Iteration = ", iterate, ", Sup Duff = ", maxDiff
-    print " "
-    print " My Check = ", mPolicyFunction[1000-1,3-1]
-    print " "
-    print "Elapse time = is ", t2-t1
+    print(" Iteration = ", iterate, ", Sup Duff = ", maxDiff)
+    print(" ")
+    print(" My Check = ", mPolicyFunction[1000-1,3-1])
+    print(" ")
+    print("Elapse time = is ", t2-t1)
