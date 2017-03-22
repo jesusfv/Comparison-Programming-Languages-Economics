@@ -24,7 +24,7 @@ def innerloop(bbeta, nGridCapital, gridCapitalNextPeriod, mOutput, nProductivity
     for nCapital in xrange(nGridCapital):
         valueHighSoFar = -100000.0
         capitalChoice  = vGridCapital[0]
-        
+
         for nCapitalNextPeriod in xrange(gridCapitalNextPeriod, nGridCapital):
             consumption = mOutput[nCapital,nProductivity] - vGridCapital[nCapitalNextPeriod]
             valueProvisional = (1-bbeta)*np.log(consumption)+bbeta*expectedValueFunction[nCapitalNextPeriod,nProductivity];
@@ -34,7 +34,7 @@ def innerloop(bbeta, nGridCapital, gridCapitalNextPeriod, mOutput, nProductivity
                 capitalChoice = vGridCapital[nCapitalNextPeriod]
                 gridCapitalNextPeriod = nCapitalNextPeriod
             else:
-                break 
+                break
 
         mValueFunctionNew[nCapital,nProductivity] = valueHighSoFar
         mPolicyFunction[nCapital,nProductivity]   = capitalChoice
@@ -64,7 +64,7 @@ def main_func():
     outputSteadyState      = capitalSteadyState**aalpha
     consumptionSteadyState = outputSteadyState-capitalSteadyState
 
-    print "Output = ", outputSteadyState, " Capital = ", capitalSteadyState, " Consumption = ", consumptionSteadyState 
+    print "Output = ", outputSteadyState, " Capital = ", capitalSteadyState, " Consumption = ", consumptionSteadyState
 
     # We generate the grid of capital
     vGridCapital           = np.arange(0.5*capitalSteadyState,1.5*capitalSteadyState,0.00001)
