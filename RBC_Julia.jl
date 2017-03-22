@@ -4,7 +4,7 @@
 # Haverford, July 29, 2013
 
 function main()
-    
+
     ##  1. Calibration
 
     aalpha = 1/3     # Elasticity of output w.r.t. capital
@@ -56,20 +56,20 @@ function main()
         expectedValueFunction = mValueFunction*mTransition';
 
         for nProductivity = 1:nGridProductivity
-        
+
             # We start from previous choice (monotonicity of policy function)
             gridCapitalNextPeriod = 1
-        
+
             for nCapital = 1:nGridCapital
-        
+
                 valueHighSoFar = -1000.0
                 capitalChoice  = vGridCapital[1]
-            
+
                 for nCapitalNextPeriod = gridCapitalNextPeriod:nGridCapital
 
                     consumption = mOutput[nCapital,nProductivity]-vGridCapital[nCapitalNextPeriod]
                     valueProvisional = (1-bbeta)*log(consumption)+bbeta*expectedValueFunction[nCapitalNextPeriod,nProductivity]
-               
+
                     if (valueProvisional>valueHighSoFar)
                 	valueHighSoFar = valueProvisional
                 	capitalChoice = vGridCapital[nCapitalNextPeriod]
@@ -77,14 +77,14 @@ function main()
                     else
                 	break # We break when we have achieved the max
                     end
-                                 
+
                 end
-            
+
                 mValueFunctionNew[nCapital,nProductivity] = valueHighSoFar
                 mPolicyFunction[nCapital,nProductivity] = capitalChoice
-          
+
             end
-        
+
         end
 
         maxDifference  = maximum(abs(mValueFunctionNew-mValueFunction))
@@ -95,7 +95,7 @@ function main()
         if mod(iteration,10)==0 || iteration == 1
             println(" Iteration = ", iteration, " Sup Diff = ", maxDifference)
         end
-           
+
     end
 
     println(" Iteration = ", iteration, " Sup Diff = ", maxDifference)
