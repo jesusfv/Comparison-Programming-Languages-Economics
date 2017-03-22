@@ -52,7 +52,7 @@ function main()
     tolerance = 0.0000001
     iteration = 0
 
-    while(maxDifference > tolerance)
+    @inbounds while(maxDifference > tolerance)
         expectedValueFunction = mValueFunction*mTransition';
 
         for nProductivity = 1:nGridProductivity
@@ -70,12 +70,12 @@ function main()
                     consumption = mOutput[nCapital,nProductivity]-vGridCapital[nCapitalNextPeriod]
                     valueProvisional = (1-bbeta)*log(consumption)+bbeta*expectedValueFunction[nCapitalNextPeriod,nProductivity]
 
-                    if (valueProvisional>valueHighSoFar)
-                	valueHighSoFar = valueProvisional
-                	capitalChoice = vGridCapital[nCapitalNextPeriod]
-                	gridCapitalNextPeriod = nCapitalNextPeriod
+                    if (valueProvisional > valueHighSoFar)
+                	   valueHighSoFar = valueProvisional
+                    	capitalChoice = vGridCapital[nCapitalNextPeriod]
+                    	gridCapitalNextPeriod = nCapitalNextPeriod
                     else
-                	break # We break when we have achieved the max
+                    	break # We break when we have achieved the max
                     end
 
                 end
@@ -87,9 +87,9 @@ function main()
 
         end
 
-        maxDifference  = maximum(abs(mValueFunctionNew-mValueFunction))
+        maxDifference  = maximum(abs.(mValueFunctionNew .- mValueFunction))
         mValueFunction    = mValueFunctionNew
-        mValueFunctionNew = zeros(nGridCapital,nGridProductivity)
+        mValueFunctionNew = zeros(nGridCapital, nGridProductivity)
 
         iteration = iteration+1
         if mod(iteration,10)==0 || iteration == 1
@@ -103,3 +103,13 @@ function main()
     println(" My check = ", mPolicyFunction[1000,3])
 
 end
+if !isinteractive()
+    main() # warmup()
+    if isempty(ARGS)
+        @time main()
+    elseif ARGS[1] == "--profile"
+        @profile main()
+        Profile.print(format = :flat, sortedby = :count)
+    end
+end
+
