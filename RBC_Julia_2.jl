@@ -3,6 +3,15 @@
 # Jesus Fernandez-Villaverde
 # Haverford, July 29, 2013
 
+## Load package with optimized distance functions
+using Distances
+@static if is_apple()
+    ## Use the system log function which is 2x faster on macOS
+    mylog(x::Float64)  = ccall((:log, :libm), Float64, (Float64,), x)
+else
+    mylog(x::Float64) = log(x)
+end
+
 function main()
 
     ##  1. Calibration
@@ -53,7 +62,8 @@ function main()
     iteration = 0
 
     @inbounds while(maxDifference > tolerance)
-        expectedValueFunction = mValueFunction*mTransition';
+        # expectedValueFunction = mValueFunction*mTransition';
+        A_mul_Bc!(expectedValueFunction, mValueFunction, mTransition)
 
         for nProductivity = 1:nGridProductivity
 
@@ -65,10 +75,12 @@ function main()
                 valueHighSoFar = -1000.0
                 capitalChoice  = vGridCapital[1]
 
+                tmp = mOutput[nCapital,nProductivity]
                 for nCapitalNextPeriod = gridCapitalNextPeriod:nGridCapital
 
-                    consumption = mOutput[nCapital,nProductivity]-vGridCapital[nCapitalNextPeriod]
-                    valueProvisional = (1-bbeta)*log(consumption)+bbeta*expectedValueFunction[nCapitalNextPeriod,nProductivity]
+                    consumption = tmp - vGridCapital[nCapitalNextPeriod]
+                    valueProvisional = (1 - bbeta) * mylog(consumption) +
+                        bbeta * expectedValueFunction[nCapitalNextPeriod,nProductivity]
 
                     if (valueProvisional > valueHighSoFar)
                 	   valueHighSoFar = valueProvisional
@@ -87,12 +99,15 @@ function main()
 
         end
 
-        maxDifference  = maximum(abs.(mValueFunctionNew .- mValueFunction))
+        maxDifference     = evaluate(Chebyshev(), mValueFunctionNew, mValueFunction)
+        # Swap the pointers
+        mTmp              = mValueFunction
         mValueFunction    = mValueFunctionNew
-        mValueFunctionNew = zeros(nGridCapital, nGridProductivity)
+        mValueFunctionNew = mTmp
+        fill!(mValueFunctionNew, 0)
 
-        iteration = iteration+1
-        if mod(iteration,10)==0 || iteration == 1
+        iteration += 1
+        if mod(iteration,10) == 0 || iteration == 1
             println(" Iteration = ", iteration, " Sup Diff = ", maxDifference)
         end
 
