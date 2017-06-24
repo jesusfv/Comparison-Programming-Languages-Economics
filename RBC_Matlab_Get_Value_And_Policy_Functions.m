@@ -17,11 +17,9 @@ nGridProductivity = length(vProductivity);
 
 %% 3. Required matrices and vectors
 
-mOutput           = zeros(nGridCapital,nGridProductivity);
 mValueFunction    = zeros(nGridCapital,nGridProductivity);
 mValueFunctionNew = zeros(nGridCapital,nGridProductivity);
 mPolicyFunction   = zeros(nGridCapital,nGridProductivity);
-expectedValueFunction = zeros(nGridCapital,nGridProductivity);
 
 %% 4. We pre-build output for each point in the grid
 
