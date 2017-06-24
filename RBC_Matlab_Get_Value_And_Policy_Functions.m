@@ -72,12 +72,12 @@ while (maxDifference>tolerance)
     
     iteration = iteration+1;
     if (mod(iteration,10)==0 || iteration ==1)
-        fprintf(' Iteration = %d, Sup Diff = %2.8f\n', iteration, maxDifference); 
+        fprintf(' Iteration = %d, Sup Diff = %2.8f\n', int32( iteration ), maxDifference); 
     end
            
 end
 
-fprintf(' Iteration = %d, Sup Diff = %2.8f\n', iteration, maxDifference); 
+fprintf(' Iteration = %d, Sup Diff = %2.8f\n', int32( iteration ), maxDifference); 
 fprintf('\n')
 
 fprintf(' My check = %2.6f\n', mPolicyFunction(1000,3)); 
