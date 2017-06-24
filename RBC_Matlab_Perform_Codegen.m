@@ -1,4 +1,4 @@
-% RBC_MATLAB_GET_VALUE_AND_POLICY_FUNCTIONS_CODEGEN_SCRIPT   Generate MEX-function
+% RBC_MATLAB_PERFORN_CODEGEN   Generate MEX-function
 %  RBC_Matlab_Get_Value_And_Policy_Functions_mex from
 %  RBC_Matlab_Get_Value_And_Policy_Functions.
 % 

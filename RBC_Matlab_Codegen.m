@@ -12,7 +12,7 @@ close all
 clc
 
 fprintf( 'Initial compilation.\n' );
-RBC_Matlab_Get_Value_And_Policy_Functions_Codegen_Script;
+RBC_Matlab_Perform_Codegen;
 fprintf( 'Compilation finished.\n\n' );
 
 tic
