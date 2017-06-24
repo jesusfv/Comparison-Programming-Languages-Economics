@@ -1,8 +1,8 @@
 % RBC_MATLAB_PARALLEL_PERFORN_CODEGEN   Generate MEX-function
-%  RBC_Matlab_Get_Value_And_Policy_Functions_mex from
-%  RBC_Matlab_Get_Value_And_Policy_Functions.
+%  RBC_Matlab_Get_Value_And_Policy_Functions_Parallel_mex from
+%  RBC_Matlab_Get_Value_And_Policy_Functions_Parallel.
 % 
-% Script generated from project 'RBC_Matlab_Get_Value_And_Policy_Functions.prj'
+% Script generated from project 'RBC_Matlab_Get_Value_And_Policy_Functions_Parallel.prj'
 %  on 24-Jun-2017.
 % 
 % See also CODER, CODER.CONFIG, CODER.TYPEOF, CODEGEN.
@@ -31,7 +31,7 @@ cfg.ExtrinsicCalls = false;
 cfg.GlobalDataSyncMethod = 'NoSync';
 
 %% Define argument types for entry-point
-%  'RBC_Matlab_Get_Value_And_Policy_Functions'.
+%  'RBC_Matlab_Get_Value_And_Policy_Functions_Parallel'.
 ARGS = cell(1,1);
 ARGS{1} = cell(4,1);
 ARGS{1}{1} = coder.typeof(0);
