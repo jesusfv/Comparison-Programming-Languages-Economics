@@ -5,7 +5,7 @@
 
 %% 0. Housekeeping
 
-clear all
+clear all %#ok<CLALL>
 close all
 clc
 
