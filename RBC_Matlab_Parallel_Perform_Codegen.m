@@ -11,7 +11,7 @@
 cfg = coder.config('mex');
 cfg.EnableMemcpy = false;
 cfg.InitFltsAndDblsToZero = false;
-cfg.EnableOpenMP = false;
+cfg.EnableOpenMP = true;
 cfg.CustomSourceCode = sprintf('#define muDoubleScalarIsNaN( x ) false\n#define muDoubleScalarIsInf( x ) false');
 cfg.MATLABSourceComments = true;
 cfg.ConstantInputs = 'Remove';

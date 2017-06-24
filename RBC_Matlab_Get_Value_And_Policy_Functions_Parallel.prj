@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.coder" plugin-version="R2016a">
-  <configuration build-checksum="1852024691" file="C:\Users\Tom\Documents\GitHub\Comparison-Programming-Languages-Economics\RBC_Matlab_Get_Value_And_Policy_Functions_Parallel.prj" location="C:\Users\Tom\Documents\GitHub\Comparison-Programming-Languages-Economics" name="RBC_Matlab_Get_Value_And_Policy_Functions_Parallel" target="target.unifiedcoder" target-name="MATLAB Coder">
+  <configuration build-checksum="1019228238" file="C:\Users\Tom\Documents\GitHub\Comparison-Programming-Languages-Economics\RBC_Matlab_Get_Value_And_Policy_Functions_Parallel.prj" location="C:\Users\Tom\Documents\GitHub\Comparison-Programming-Languages-Economics" name="RBC_Matlab_Get_Value_And_Policy_Functions_Parallel" target="target.unifiedcoder" target-name="MATLAB Coder">
     <profile key="profile.mex">
       <param.BuiltInstrumentedMex>false</param.BuiltInstrumentedMex>
       <param.RanInstrumentedMex>false</param.RanInstrumentedMex>
@@ -50,7 +50,7 @@
       <param.InlineStackLimit>2147483647</param.InlineStackLimit>
       <param.EnableMemcpy>false</param.EnableMemcpy>
       <param.MemcpyThreshold>64</param.MemcpyThreshold>
-      <param.EnableOpenMP>false</param.EnableOpenMP>
+      <param.EnableOpenMP>true</param.EnableOpenMP>
       <param.InitFltsAndDblsToZero>false</param.InitFltsAndDblsToZero>
       <param.ConstantInputs>option.ConstantInputs.Remove</param.ConstantInputs>
       <param.EnableCRICodeCoverage>true</param.EnableCRICodeCoverage>
@@ -155,9 +155,9 @@
       <param.CustomSource />
       <param.CustomLibrary />
       <param.PostCodeGenCommand />
-      <param.TargetLangStandard>C89/C90 (ANSI)</param.TargetLangStandard>
-      <param.CodeReplacementLibrary>None</param.CodeReplacementLibrary>
-      <param.DeprecatedCRLFlag>false</param.DeprecatedCRLFlag>
+      <param.TargetLangStandard />
+      <param.CodeReplacementLibrary />
+      <param.DeprecatedCRLFlag />
       <param.SameHardware>true</param.SameHardware>
       <param.Toolchain>Automatically locate an installed toolchain</param.Toolchain>
       <param.BuildConfiguration />
@@ -235,7 +235,7 @@
       <param.InitFltsAndDblsToZero />
       <param.PassStructByReference />
       <param.CustomLAPACKCallback />
-      <param.UseECoderFeatures>true</param.UseECoderFeatures>
+      <param.UseECoderFeatures />
       <unset>
         <param.grt.GenCodeOnly />
         <param.WorkingFolder />
@@ -741,7 +741,7 @@
     <param.unifiedParamStorage />
     <var.gc.lastOutputRoot>codegen\mex\RBC_Matlab_Get_Value_And_Policy_Functions_Parallel</var.gc.lastOutputRoot>
     <var.gc.lastOutputType>MEX_FILE</var.gc.lastOutputType>
-    <var.gc.preBuildChecksum>629321708</var.gc.preBuildChecksum>
+    <var.gc.preBuildChecksum>2245491249</var.gc.preBuildChecksum>
     <var.cfi.lastOutputRoot>codegen\mex\RBC_Matlab_Get_Value_And_Policy_Functions_Parallel</var.cfi.lastOutputRoot>
     <var.cfi.preBuildChecksum>3162474535</var.cfi.preBuildChecksum>
     <var.lastCfiTestSnippet>RBC_Matlab_Parallel</var.lastCfiTestSnippet>
