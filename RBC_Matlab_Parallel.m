@@ -5,9 +5,7 @@
 
 %% 0. Housekeeping
 
-warning( 'off', 'MATLAB:lang:cannotClearExecutingFunction' );
-clear all %#ok<CLALL>
-warning( 'on', 'MATLAB:lang:cannotClearExecutingFunction' );
+clear variables
 close all
 clc
 
