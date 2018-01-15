@@ -51,6 +51,7 @@ function main()
     maxDifference = 10.0
     tolerance = 0.0000001
     iteration = 0
+    consumption = 0.0
 
     while(maxDifference > tolerance)
         expectedValueFunction = mValueFunction*mTransition';
@@ -60,12 +61,12 @@ function main()
             # We start from previous choice (monotonicity of policy function)
             gridCapitalNextPeriod = 1
         
-            for nCapital = 1:nGridCapital
+            @inbounds for nCapital = 1:nGridCapital
         
                 valueHighSoFar = -1000.0
                 capitalChoice  = vGridCapital[1]
             
-                for nCapitalNextPeriod = gridCapitalNextPeriod:nGridCapital
+                @inbounds for nCapitalNextPeriod = gridCapitalNextPeriod:nGridCapital
 
                     consumption = mOutput[nCapital,nProductivity]-vGridCapital[nCapitalNextPeriod]
                     valueProvisional = (1-bbeta)*log(consumption)+bbeta*expectedValueFunction[nCapitalNextPeriod,nProductivity]
@@ -87,7 +88,7 @@ function main()
         
         end
 
-        maxDifference  = maximum(abs(mValueFunctionNew-mValueFunction))
+        maxDifference  = maximum(abs.(mValueFunctionNew-mValueFunction))
         mValueFunction    = mValueFunctionNew
         mValueFunctionNew = zeros(nGridCapital,nGridProductivity)
 
@@ -103,3 +104,10 @@ function main()
     println(" My check = ", mPolicyFunction[1000,3])
 
 end
+
+# warm up
+main();
+gc()
+println("running timing now:")
+sleep(2)
+@time main()
