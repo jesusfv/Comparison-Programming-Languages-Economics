@@ -1,0 +1,140 @@
+g++ -o testc -O3 RBC_CPP.cpp
+gfortran -o testf -O3 RBC_F90.f90
+RUNNING ALL TESTS
+
+FORTRAN:
+./testf
+ Steady State values
+ Output:   0.56273142426227074      Capital:   0.17819828742434793      Consumption:   0.38453313683792278     
+ Iteration:           1 Sup Diff:   5.2741607134075871E-002
+ Iteration:          10 Sup Diff:   3.1346953831200064E-002
+ Iteration:          20 Sup Diff:   1.8703460152962759E-002
+ Iteration:          30 Sup Diff:   1.1165510606509832E-002
+ Iteration:          40 Sup Diff:   6.6685398355890158E-003
+ Iteration:          50 Sup Diff:   3.9842909760740008E-003
+ Iteration:          60 Sup Diff:   2.3813103290404314E-003
+ Iteration:          70 Sup Diff:   1.4236575018528042E-003
+ Iteration:          80 Sup Diff:   8.5133892789679422E-004
+ Iteration:          90 Sup Diff:   5.0920456767089561E-004
+ Iteration:         100 Sup Diff:   3.0462281856558082E-004
+ Iteration:         110 Sup Diff:   1.8226456357595122E-004
+ Iteration:         120 Sup Diff:   1.0906931033871636E-004
+ Iteration:         130 Sup Diff:   6.5276304536787677E-005
+ Iteration:         140 Sup Diff:   3.9070994080292465E-005
+ Iteration:         150 Sup Diff:   2.3388019260051074E-005
+ Iteration:         160 Sup Diff:   1.4008591582403973E-005
+ Iteration:         170 Sup Diff:   8.3912834882848841E-006
+ Iteration:         180 Sup Diff:   5.0264531857857619E-006
+ Iteration:         190 Sup Diff:   3.0108863812161601E-006
+ Iteration:         200 Sup Diff:   1.8035437577834657E-006
+ Iteration:         210 Sup Diff:   1.0803355822153193E-006
+ Iteration:         220 Sup Diff:   6.4712835090574572E-007
+ Iteration:         230 Sup Diff:   3.8763410237230289E-007
+ Iteration:         240 Sup Diff:   2.3219527311990618E-007
+ Iteration:         250 Sup Diff:   1.3908639506787779E-007
+ Iteration:         257 Sup Diff:   9.7159772005639411E-008
+  
+ My check:  0.14654914390886931     
+  
+ Elapsed time is   0.559226036    
+
+C++:
+./testc
+Output = 0.562731, Capital = 0.178198, Consumption = 0.384533
+ Iteration = 1, Sup Diff = 0.0527416
+Iteration = 10, Sup Diff = 0.0313469
+Iteration = 20, Sup Diff = 0.0187035
+Iteration = 30, Sup Diff = 0.0111655
+Iteration = 40, Sup Diff = 0.00666854
+Iteration = 50, Sup Diff = 0.00398429
+Iteration = 60, Sup Diff = 0.00238131
+Iteration = 70, Sup Diff = 0.00142366
+Iteration = 80, Sup Diff = 0.00085134
+Iteration = 90, Sup Diff = 0.000509205
+Iteration = 100, Sup Diff = 0.000304623
+Iteration = 110, Sup Diff = 0.000182265
+Iteration = 120, Sup Diff = 0.00010907
+Iteration = 130, Sup Diff = 6.52764e-05
+Iteration = 140, Sup Diff = 3.90711e-05
+Iteration = 150, Sup Diff = 2.33881e-05
+Iteration = 160, Sup Diff = 1.40086e-05
+Iteration = 170, Sup Diff = 8.39132e-06
+Iteration = 180, Sup Diff = 5.02647e-06
+Iteration = 190, Sup Diff = 3.0109e-06
+Iteration = 200, Sup Diff = 1.80355e-06
+Iteration = 210, Sup Diff = 1.08034e-06
+Iteration = 220, Sup Diff = 6.47132e-07
+Iteration = 230, Sup Diff = 3.87636e-07
+Iteration = 240, Sup Diff = 2.32197e-07
+Iteration = 250, Sup Diff = 1.39087e-07
+Iteration = 257, Sup Diff = 9.71604e-08
+ 
+My check = 0.146549
+ 
+Elapsed time is   = 0.584746
+ 
+
+JULIA v0.6:
+julia6 RBC_Julia.jl
+Output = 0.5627314338711378 Capital = 0.178198287392527 Consumption = 0.3845331464786108
+ Iteration = 1 Sup Diff = 0.05274159340733661
+ Iteration = 10 Sup Diff = 0.031346949265852075
+ Iteration = 20 Sup Diff = 0.01870345989335709
+ Iteration = 30 Sup Diff = 0.01116551203397076
+ Iteration = 40 Sup Diff = 0.00666854170813258
+ Iteration = 50 Sup Diff = 0.003984292748717033
+ Iteration = 60 Sup Diff = 0.0023813118039327508
+ Iteration = 70 Sup Diff = 0.0014236586450983024
+ Iteration = 80 Sup Diff = 0.0008513397747205165
+ Iteration = 90 Sup Diff = 0.0005092051752288995
+ Iteration = 100 Sup Diff = 0.00030462324421465237
+ Iteration = 110 Sup Diff = 0.00018226485632300005
+ Iteration = 120 Sup Diff = 0.00010906950872624499
+ Iteration = 130 Sup Diff = 6.527643736320421e-5
+ Iteration = 140 Sup Diff = 3.907108211997912e-5
+ Iteration = 150 Sup Diff = 2.3388077119990136e-5
+ Iteration = 160 Sup Diff = 1.4008644637186762e-5
+ Iteration = 170 Sup Diff = 8.391317202871562e-6
+ Iteration = 180 Sup Diff = 5.026474537817016e-6
+ Iteration = 190 Sup Diff = 3.010899863653549e-6
+ Iteration = 200 Sup Diff = 1.8035522479920019e-6
+ Iteration = 210 Sup Diff = 1.080340915837752e-6
+ Iteration = 220 Sup Diff = 6.471316943423844e-7
+ Iteration = 230 Sup Diff = 3.876361938104367e-7
+ Iteration = 240 Sup Diff = 2.3219657907525004e-7
+ Iteration = 250 Sup Diff = 1.3908720941646635e-7
+ Iteration = 257 Sup Diff = 9.716035664908418e-8
+ 
+ My check = 0.1465491436962635
+running timing now:
+Output = 0.5627314338711378 Capital = 0.178198287392527 Consumption = 0.3845331464786108
+ Iteration = 1 Sup Diff = 0.05274159340733661
+ Iteration = 10 Sup Diff = 0.031346949265852075
+ Iteration = 20 Sup Diff = 0.01870345989335709
+ Iteration = 30 Sup Diff = 0.01116551203397076
+ Iteration = 40 Sup Diff = 0.00666854170813258
+ Iteration = 50 Sup Diff = 0.003984292748717033
+ Iteration = 60 Sup Diff = 0.0023813118039327508
+ Iteration = 70 Sup Diff = 0.0014236586450983024
+ Iteration = 80 Sup Diff = 0.0008513397747205165
+ Iteration = 90 Sup Diff = 0.0005092051752288995
+ Iteration = 100 Sup Diff = 0.00030462324421465237
+ Iteration = 110 Sup Diff = 0.00018226485632300005
+ Iteration = 120 Sup Diff = 0.00010906950872624499
+ Iteration = 130 Sup Diff = 6.527643736320421e-5
+ Iteration = 140 Sup Diff = 3.907108211997912e-5
+ Iteration = 150 Sup Diff = 2.3388077119990136e-5
+ Iteration = 160 Sup Diff = 1.4008644637186762e-5
+ Iteration = 170 Sup Diff = 8.391317202871562e-6
+ Iteration = 180 Sup Diff = 5.026474537817016e-6
+ Iteration = 190 Sup Diff = 3.010899863653549e-6
+ Iteration = 200 Sup Diff = 1.8035522479920019e-6
+ Iteration = 210 Sup Diff = 1.080340915837752e-6
+ Iteration = 220 Sup Diff = 6.471316943423844e-7
+ Iteration = 230 Sup Diff = 3.876361938104367e-7
+ Iteration = 240 Sup Diff = 2.3219657907525004e-7
+ Iteration = 250 Sup Diff = 1.3908720941646635e-7
+ Iteration = 257 Sup Diff = 9.716035664908418e-8
+ 
+ My check = 0.1465491436962635
+  1.164491 seconds (2.47 k allocations: 703.290 MiB, 3.21% gc time)
