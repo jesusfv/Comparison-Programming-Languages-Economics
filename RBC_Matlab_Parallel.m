@@ -9,6 +9,8 @@ clear variables
 close all
 clc
 
+gcp; % open parallel pool
+
 tic
 
 %%  1. Calibration

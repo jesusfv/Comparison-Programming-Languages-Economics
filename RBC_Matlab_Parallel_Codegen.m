@@ -9,6 +9,10 @@ clear variables
 close all
 clc
 
+fprintf( 'Initial compilation.\n' );
+RBC_Matlab_Parallel_Perform_Codegen;
+fprintf( 'Compilation finished.\n\n' );
+
 tic
 
 %%  1. Calibration
@@ -26,7 +30,7 @@ mTransition   = [0.9727, 0.0273, 0.0000, 0.0000, 0.0000;
                  0.0000, 0.0000, 0.0153, 0.9806, 0.0041;
                  0.0000, 0.0000, 0.0000, 0.0273, 0.9727];
              
-[ vGridCapital, mValueFunction, mPolicyFunction ] = RBC_Matlab_Get_Value_And_Policy_Functions( aalpha, bbeta, vProductivity, mTransition );
+[ vGridCapital, mValueFunction, mPolicyFunction ] = RBC_Matlab_Get_Value_And_Policy_Functions_Parallel_mex( aalpha, bbeta, vProductivity, mTransition );
 
 toc
 
