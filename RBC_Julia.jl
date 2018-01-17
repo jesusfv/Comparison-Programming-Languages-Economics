@@ -53,7 +53,13 @@ function main()
     iteration = 0
 
     while(maxDifference > tolerance)
-        expectedValueFunction = mValueFunction*mTransition';
+
+        for nProductivity=1:nGridProductivity, nCapital=1:nGridCapital
+            expectedValueFunction[nCapital,nProductivity] = 0.0
+            for nProductivityNextPeriod=1:nGridProductivity
+                expectedValueFunction[nCapital,nProductivity] += mTransition[nProductivity,nProductivityNextPeriod]*mValueFunction[nCapital,nProductivityNextPeriod]
+            end
+        end
 
         for nProductivity in 1:nGridProductivity
 
