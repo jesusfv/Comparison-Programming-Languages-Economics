@@ -4,11 +4,11 @@
 # Haverford, July 29, 2013
 
 function main()
-    
+
     ##  1. Calibration
 
-    aalpha = 1/3     # Elasticity of output w.r.t. capital
-    bbeta  = 0.95    # Discount factor
+    α = 1/3     # Elasticity of output w.r.t. capital
+    β = 0.95    # Discount factor
 
     # Productivity values
     vProductivity = [0.9792 0.9896 1.0000 1.0106 1.0212]
@@ -22,8 +22,8 @@ function main()
 
     # 2. Steady State
 
-    capitalSteadyState = (aalpha*bbeta)^(1/(1-aalpha))
-    outputSteadyState = capitalSteadyState^aalpha
+    capitalSteadyState = (α*β)^(1/(1-α))
+    outputSteadyState = capitalSteadyState^α
     consumptionSteadyState = outputSteadyState-capitalSteadyState
 
     println("Output = ",outputSteadyState," Capital = ",capitalSteadyState," Consumption = ",consumptionSteadyState)
@@ -44,7 +44,7 @@ function main()
 
     # 4. We pre-build output for each point in the grid
 
-    mOutput = (vGridCapital.^aalpha)*vProductivity;
+    mOutput = (vGridCapital.^α)*vProductivity;
 
     # 5. Main iteration
 
@@ -55,39 +55,39 @@ function main()
     while(maxDifference > tolerance)
         expectedValueFunction = mValueFunction*mTransition';
 
-        for nProductivity = 1:nGridProductivity
-        
+        for nProductivity in 1:nGridProductivity
+
             # We start from previous choice (monotonicity of policy function)
             gridCapitalNextPeriod = 1
-        
-            for nCapital = 1:nGridCapital
-        
+
+            for nCapital in 1:nGridCapital
+
                 valueHighSoFar = -1000.0
                 capitalChoice  = vGridCapital[1]
-            
-                for nCapitalNextPeriod = gridCapitalNextPeriod:nGridCapital
+
+                for nCapitalNextPeriod in gridCapitalNextPeriod:nGridCapital
 
                     consumption = mOutput[nCapital,nProductivity]-vGridCapital[nCapitalNextPeriod]
-                    valueProvisional = (1-bbeta)*log(consumption)+bbeta*expectedValueFunction[nCapitalNextPeriod,nProductivity]
-               
+                    valueProvisional = (1-β)*log(consumption)+β*expectedValueFunction[nCapitalNextPeriod,nProductivity]
+
                     if (valueProvisional>valueHighSoFar)
-                	valueHighSoFar = valueProvisional
-                	capitalChoice = vGridCapital[nCapitalNextPeriod]
-                	gridCapitalNextPeriod = nCapitalNextPeriod
+                	       valueHighSoFar = valueProvisional
+                	       capitalChoice = vGridCapital[nCapitalNextPeriod]
+                	       gridCapitalNextPeriod = nCapitalNextPeriod
                     else
-                	break # We break when we have achieved the max
+                	       break # We break when we have achieved the max
                     end
-                                 
+
                 end
-            
+
                 mValueFunctionNew[nCapital,nProductivity] = valueHighSoFar
                 mPolicyFunction[nCapital,nProductivity] = capitalChoice
-          
+
             end
-        
+
         end
 
-        maxDifference  = maximum(abs(mValueFunctionNew-mValueFunction))
+        maxDifference     = maximum(abs.(mValueFunctionNew-mValueFunction))
         mValueFunction    = mValueFunctionNew
         mValueFunctionNew = zeros(nGridCapital,nGridProductivity)
 
@@ -95,11 +95,13 @@ function main()
         if mod(iteration,10)==0 || iteration == 1
             println(" Iteration = ", iteration, " Sup Diff = ", maxDifference)
         end
-           
+
     end
 
     println(" Iteration = ", iteration, " Sup Diff = ", maxDifference)
     println(" ")
     println(" My check = ", mPolicyFunction[1000,3])
+    println(" My check = ", mValueFunction[1000,3])
 
 end
+
