@@ -52,8 +52,8 @@ function main()
     tolerance = 0.0000001
     iteration = 0
 
-    while(maxDifference > tolerance)
-        expectedValueFunction = mValueFunction*mTransition';
+    @inbounds while(maxDifference > tolerance)
+        expectedValueFunction = mValueFunction*copy(mTransition');
 
         for nProductivity in 1:nGridProductivity
 
@@ -87,7 +87,7 @@ function main()
 
         end
         
-        maxDifference     = maximum(abs.(mValueFunctionNew-mValueFunction))
+        maxDifference     = maximum(abs(x-y) for (x,y) in zip(mValueFunctionNew,mValueFunction))
         mValueFunction, mValueFunctionNew = mValueFunctionNew, mValueFunction
         
         iteration = iteration+1
@@ -103,4 +103,3 @@ function main()
     println(" My check = ", mValueFunction[1000,3])
 
 end
-
