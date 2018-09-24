@@ -59,7 +59,6 @@ Rcpp::NumericVector SingleLoop(Rcpp::NumericVector vProductivity, Rcpp::NumericV
           else{
             break; // We break when we have achieved the max
           }
-          
           mValueFunctionNew(nCapital,nProductivity) = valueHighSoFar;
           mPolicyFunction(nCapital,nProductivity) = capitalChoice;
         }
@@ -83,13 +82,12 @@ Rcpp::NumericVector SingleLoop(Rcpp::NumericVector vProductivity, Rcpp::NumericV
     if (floor(iteration/10)==iteration/10 || iteration ==1){
       Rcpp::Rcout <<"Iteration = "<<iteration<<", Sup Diff = "<< maxDifference<<"\n";
     }
-    
   }
+  
   Rcpp::Rcout <<"Iteration = "<<iteration<<", Sup Diff = "<<maxDifference<<"\n";
   Rcpp::Rcout <<" \n";
   Rcpp::Rcout <<"My check = "<< mPolicyFunction(999,2)<<"\n";
   Rcpp::Rcout <<" \n";
   
   return mPolicyFunction;
-  
 }
