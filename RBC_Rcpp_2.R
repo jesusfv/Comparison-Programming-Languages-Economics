@@ -49,6 +49,9 @@ mOutput = vGridCapital^aalpha%*%t(vProductivity)
 
 ## 5. Main iteration
 
-mPolicyFunction <- BothLoops(vProductivity,vGridCapital, mOutput, mTransition)
+mPolicyFunction <- BothLoops(
+  vProductivity,vGridCapital, mOutput, mTransition, bbeta, nGridCapital, 
+  nGridProductivity
+)
 
 cat(" Time = ", proc.time() - ptm,"\n") 

@@ -3,22 +3,22 @@
 #include <cmath>
 
 // [[Rcpp::export]]
-Rcpp::NumericVector BothLoops(Rcpp::NumericVector vProductivity, Rcpp::NumericVector vGridCapital,
-                              Rcpp::NumericMatrix mOutput, Rcpp::NumericMatrix mTransition){
+Rcpp::NumericVector BothLoops(Rcpp::NumericVector& vProductivity, Rcpp::NumericVector& vGridCapital,
+                              Rcpp::NumericMatrix& mOutput, Rcpp::NumericMatrix& mTransition,
+                              Rcpp::NumericVector& bbeta_, Rcpp::IntegerVector& nGridCapital_, 
+                              Rcpp::IntegerVector& nGridProductivity_){
   
-  const double bbeta  = 0.95;
-  
-  const int nGridCapital = 17820, nGridProductivity = 5;
+  const int nGridCapital = nGridCapital_[0];
+  const int nGridProductivity = nGridProductivity_[0];
+  const double bbeta = bbeta_[0];
   
   double valueProvisional, valueHighSoFar, consumption, capitalChoice;
   
-  int nProductivity, nCapital, nCapitalNextPeriod, gridCapitalNextPeriod;
+  int nProductivity, nProductivityNextPeriod, nCapital, nCapitalNextPeriod, gridCapitalNextPeriod;
   
   double maxDifference = 10.0, diff, diffHighSoFar;
   double tolerance = 0.0000001;
-  double iteration = 0;
-  
-  int nProductivityNextPeriod;
+  int iteration = 0;
   
   Rcpp::NumericMatrix mValueFunctionNew(nGridCapital,nGridProductivity);
   Rcpp::NumericMatrix mValueFunction(nGridCapital,nGridProductivity);
@@ -79,7 +79,7 @@ Rcpp::NumericVector BothLoops(Rcpp::NumericVector vProductivity, Rcpp::NumericVe
     maxDifference = diffHighSoFar;
     
     iteration = iteration+1;
-    if (floor(iteration/10)==iteration/10 || iteration ==1){
+    if (iteration % 10 ==0 || iteration ==1){
       Rcpp::Rcout <<"Iteration = "<<iteration<<", Sup Diff = "<< maxDifference<<"\n";
     }
   }
