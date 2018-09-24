@@ -2,7 +2,7 @@
 
 rm(list=ls())
 
-Rcpp::sourceCpp('SingleLoop.cpp')
+Rcpp::sourceCpp('BothLoops.cpp')
 
 ptm <- proc.time()
 
@@ -49,6 +49,6 @@ mOutput = vGridCapital^aalpha%*%t(vProductivity)
 
 ## 5. Main iteration
 
-mPolicyFunction <- SingleLoop(vProductivity,vGridCapital, mOutput, mTransition)
+mPolicyFunction <- BothLoops(vProductivity,vGridCapital, mOutput, mTransition)
 
 cat(" Time = ", proc.time() - ptm,"\n") 

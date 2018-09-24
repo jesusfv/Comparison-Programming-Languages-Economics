@@ -3,8 +3,8 @@
 #include <cmath>
 
 // [[Rcpp::export]]
-Rcpp::NumericVector SingleLoop(Rcpp::NumericVector vProductivity, Rcpp::NumericVector vGridCapital,
-                               Rcpp::NumericMatrix mOutput, Rcpp::NumericMatrix mTransition){
+Rcpp::NumericVector BothLoops(Rcpp::NumericVector vProductivity, Rcpp::NumericVector vGridCapital,
+                              Rcpp::NumericMatrix mOutput, Rcpp::NumericMatrix mTransition){
   
   const double bbeta  = 0.95;
   
