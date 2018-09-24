@@ -4,7 +4,7 @@
 
 // [[Rcpp::export]]
 Rcpp::NumericVector SingleLoop(Rcpp::NumericVector vProductivity, Rcpp::NumericVector vGridCapital,
-                         Rcpp::NumericMatrix mOutput, Rcpp::NumericMatrix mTransition){
+                               Rcpp::NumericMatrix mOutput, Rcpp::NumericMatrix mTransition){
   
   const double bbeta  = 0.95;
   
