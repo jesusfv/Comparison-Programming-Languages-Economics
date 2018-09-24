@@ -1,12 +1,10 @@
 #include <Rcpp.h>
 #include <math.h>       // power
 #include <cmath>
-using namespace Rcpp;
-
 
 // [[Rcpp::export]]
-NumericVector SingleLoop(NumericVector vProductivity, NumericVector vGridCapital,
-                         NumericMatrix mOutput, NumericMatrix mTransition){
+Rcpp::NumericVector SingleLoop(Rcpp::NumericVector vProductivity, Rcpp::NumericVector vGridCapital,
+                         Rcpp::NumericMatrix mOutput, Rcpp::NumericMatrix mTransition){
   
   const double bbeta  = 0.95;
   
@@ -22,10 +20,10 @@ NumericVector SingleLoop(NumericVector vProductivity, NumericVector vGridCapital
   
   int nProductivityNextPeriod;
   
-  NumericMatrix mValueFunctionNew(nGridCapital,nGridProductivity);
-  NumericMatrix mValueFunction(nGridCapital,nGridProductivity);
-  NumericMatrix mPolicyFunction(nGridCapital,nGridProductivity);
-  NumericMatrix expectedValueFunction(nGridCapital,nGridProductivity);
+  Rcpp::NumericMatrix mValueFunctionNew(nGridCapital,nGridProductivity);
+  Rcpp::NumericMatrix mValueFunction(nGridCapital,nGridProductivity);
+  Rcpp::NumericMatrix mPolicyFunction(nGridCapital,nGridProductivity);
+  Rcpp::NumericMatrix expectedValueFunction(nGridCapital,nGridProductivity);
   
   while(maxDifference > tolerance) {
     
@@ -37,7 +35,7 @@ NumericVector SingleLoop(NumericVector vProductivity, NumericVector vGridCapital
         }
       }
     }
-  
+    
     for (nProductivity = 0;nProductivity<nGridProductivity;++nProductivity){
       
       // We start from previous choice (monotonicity of policy function)
@@ -83,7 +81,7 @@ NumericVector SingleLoop(NumericVector vProductivity, NumericVector vGridCapital
     
     iteration = iteration+1;
     if (floor(iteration/10)==iteration/10 || iteration ==1){
-      Rcout <<"Iteration = "<<iteration<<", Sup Diff = "<< maxDifference<<"\n";
+      Rcpp::Rcout <<"Iteration = "<<iteration<<", Sup Diff = "<< maxDifference<<"\n";
     }
     
   }
