@@ -12,14 +12,13 @@ bbeta  = 0.95;    # Discount factor
 vProductivity <- c(0.9792, 0.9896, 1.0000, 1.0106, 1.0212);
 
 # Transition matrix
-mTransition <- c(0.9727, 0.0273, 0.0000, 0.0000, 0.0000,
-                 0.0041, 0.9806, 0.0153, 0.0000, 0.0000,
-                 0.0000, 0.0082, 0.9837, 0.0082, 0.0000,
-                 0.0000, 0.0000, 0.0153, 0.9806, 0.0041,
-                 0.0000, 0.0000, 0.0000, 0.0273, 0.9727);
+mTransition <- c(0.9727, 0.0041, 0, 0, 0, 
+                 0.0273, 0.9806, 0.0082, 0, 0, 
+                 0, 0.0153, 0.9837, 0.0153, 0, 
+                 0, 0, 0.0082, 0.9806, 0.0273, 
+                 0, 0, 0, 0.0041, 0.9727);
 
-mTransition <- matrix(mTransition,nrow=5,ncol=5);
-mTransition <- t(mTransition)
+mTransition <- matrix(mTransition,nrow=5L,ncol=5L);
 
 ## 2. Steady State
 
@@ -38,15 +37,13 @@ nGridProductivity <- length(vProductivity);
 
 # 3. Required matrices and vectors
 
-mOutput           <- matrix(0,nGridCapital,nGridProductivity);
-mValueFunction    <- matrix(0,nGridCapital,nGridProductivity);
-mValueFunctionNew <- matrix(0,nGridCapital,nGridProductivity);
-mPolicyFunction   <- matrix(0,nGridCapital,nGridProductivity);
-expectedValueFunction <- matrix(0,nGridCapital,nGridProductivity);
+mOutput <- mValueFunction <- mValueFunctionNew <- 
+  mPolicyFunction <- expectedValueFunction <- 
+  matrix(0,nGridCapital,nGridProductivity);
 
 ## 4. We pre-build output for each point in the grid
 
-mOutput = as.matrix(vGridCapital^aalpha)%*%t(as.matrix(vProductivity));
+mOutput = (vGridCapital^aalpha)%*%t(vProductivity);
 
 ## 5. Main iteration
 
@@ -54,19 +51,23 @@ maxDifference <- 10;
 tolerance <- 0.0000001;
 iteration <- 0;
 
+# pre-declare 1:n for inner loops
+GridProductivityIndex = seq_len(nGridProductivity)
+GridCapitalIndex = seq_len(nGridCapital)
+
 while (maxDifference>tolerance){  
   
   expectedValueFunction = mValueFunction %*% t(mTransition);
 
-  for (nProductivity in 1:nGridProductivity){
+  for (nProductivity in GridProductivityIndex){
 
     # We start from previous choice (monotonicity of policy function)
-    gridCapitalNextPeriod <- 1;
+    gridCapitalNextPeriod <- 1L;
 
-    for (nCapital in 1:nGridCapital){
+    for (nCapital in GridCapitalIndex){
 
       valueHighSoFar <- -100000;
-      capitalChoice  <- vGridCapital[1];
+      capitalChoice  <- vGridCapital[1L];
       
       for (nCapitalNextPeriod in gridCapitalNextPeriod:nGridCapital){
 
@@ -92,8 +93,8 @@ while (maxDifference>tolerance){
   maxDifference <- max(abs(mValueFunctionNew-mValueFunction));
   mValueFunction <- mValueFunctionNew;
   
-  iteration = iteration+1;
-  if ((iteration %% 10)==0 | iteration ==1){
+  iteration = iteration+1L;
+  if ((iteration %% 10L)==0L | iteration == 1L){
     cat("  Iteration = ", iteration," Sup Diff = ", maxDifference,"\n"); 
   }
   
@@ -102,7 +103,7 @@ while (maxDifference>tolerance){
 cat("  Iteration = ", iteration," Sup Diff = ", maxDifference,"\n"); 
 cat(" \n")
 
-cat(" My chek = ", mPolicyFunction[1000,3],"\n"); 
+cat(" My chek = ", mPolicyFunction[1000L,3L],"\n"); 
 cat(" \n")
 
 cat(" Time = ", proc.time() - ptm,"\n"); 
