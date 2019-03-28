@@ -1,0 +1,133 @@
+## Basic RBC model with full depreciation
+#
+# Federico Giri and Riccardo (Jack) Lucchetti
+# Ancona, 2019-01-09
+#
+# (adapted for hansl from JFV's matlab file)
+
+# --- 0. Housekeeping ------------------------------------------------------
+
+clear 
+set echo off
+set messages off
+
+set stopwatch
+
+# --- 1. Calibration -------------------------------------------------------
+
+scalar aalpha = 1/3     # Elasticity of output w.r.t. capital
+scalar bbeta  = 0.95    # Discount factor
+
+# Productivity values
+matrix vProductivity = {0.9792, 0.9896, 1.0000, 1.0106, 1.0212}
+
+# Transition matrix
+matrix mTransition   = {0.9727, 0.0273, 0.0000, 0.0000, 0.0000; \
+0.0041, 0.9806, 0.0153, 0.0000, 0.0000; \
+0.0000, 0.0082, 0.9837, 0.0082, 0.0000; \
+0.0000, 0.0000, 0.0153, 0.9806, 0.0041; \
+0.0000, 0.0000, 0.0000, 0.0273, 0.9727}
+
+# --- 2. Steady State ------------------------------------------------------
+
+scalar capitalSteadyState     = (aalpha*bbeta)^(1/(1-aalpha))
+scalar outputSteadyState      = capitalSteadyState^aalpha
+scalar consumptionSteadyState = outputSteadyState-capitalSteadyState
+
+printf " Output = %2.6f, Capital = %2.6f, Consumption = %2.6f\n", \
+outputSteadyState, capitalSteadyState, consumptionSteadyState
+printf "\n"
+
+# We generate the grid of capital
+scalar kmin = 0.5*capitalSteadyState
+scalar kmax = 1.5*capitalSteadyState
+scalar Kgrid_eps = 0.00001
+
+scalar nGridCapital = floor((kmax - kmin)/Kgrid_eps) + 1
+vGridCapital = kmin + seq(0, nGridCapital-1) * Kgrid_eps
+printf "min(K) = %16.13f, max(K) = %16.13f, ngrid = %d\n", \
+vGridCapital[1], vGridCapital[nGridCapital], nGridCapital
+nGridProductivity = cols(vProductivity)
+
+# --- 3. Required matrices and vectors ------------------------------------
+
+matrix mOutput               = zeros(nGridCapital,nGridProductivity)
+matrix mValueFunction        = zeros(nGridCapital,nGridProductivity)
+matrix mValueFunctionNew     = zeros(nGridCapital,nGridProductivity)
+matrix mPolicyFunction       = zeros(nGridCapital,nGridProductivity)
+matrix expectedValueFunction = zeros(nGridCapital,nGridProductivity)
+
+# ---  4. We pre-build output for each point in the grid ------------------
+
+matrix mOutput = (vGridCapital'.^aalpha)*vProductivity
+
+# ---  5. Main iteration --------------------------------------------------
+
+scalar maxDifference = 10.0
+scalar tolerance = 0.0000001
+scalar iteration = 0
+
+loop while maxDifference > tolerance --quiet
+    expectedValueFunction = mValueFunction*mTransition'
+
+    loop p = 1 .. nGridProductivity --quiet
+        # We start from previous choice (monotonicity of policy function)
+        scalar gridCapitalNextPeriod = 1
+
+        loop k = 1 .. nGridCapital --quiet
+
+            scalar valueHighSoFar = -1000.0
+            capitalChoice = vGridCapital[1]
+            
+            loop n = gridCapitalNextPeriod .. nGridCapital --quiet
+                scalar consumption = mOutput[k,p] - vGridCapital[n]
+                scalar valueProvisional = (1-bbeta) * log(consumption) + bbeta * expectedValueFunction[n,p]
+            
+                if valueProvisional > valueHighSoFar
+                    valueHighSoFar = valueProvisional
+                    capitalChoice = vGridCapital[n]
+                    gridCapitalNextPeriod = n++
+                else
+                    break # We break when we have achieved the max
+                endif
+            endloop
+
+            mValueFunctionNew[k,p] = valueHighSoFar
+            mPolicyFunction[k,p] = capitalChoice
+
+        endloop
+
+    endloop
+
+    maxDifference = maxr(maxc(abs(mValueFunctionNew-mValueFunction)))
+    mValueFunction = mValueFunctionNew
+    mValueFunctionNew = zeros(nGridCapital,nGridProductivity)
+    
+    iteration++
+    if (iteration%10)==0 || iteration == 1
+        printf " Iteration = %3d, Sup Diff = %2.8f\n", iteration, maxDifference
+        flush
+    endif
+            
+endloop
+
+printf " Iteration = %d, Sup Diff = %2.8f\n", iteration, maxDifference
+printf "\n"
+
+printf " My check = %2.6f\n", mPolicyFunction[1000,3]
+printf "\n"
+
+printf "Elapsed time = %g seconds\n", $stopwatch
+
+# ---  6. Plotting results -------------------------------------------------
+
+matrix X = mValueFunction ~ vGridCapital'
+gnuplot 1 2 3 4 5 6 --matrix=X --with-lines --output=display 
+
+matrix X = mPolicyFunction ~ vGridCapital'
+gnuplot 1 2 3 4 5 6 --matrix=X --with-lines --output=display 
+
+matrix vExactPolicyFunction = aalpha*bbeta.*(vGridCapital.^aalpha)
+matrix dif = vExactPolicyFunction' - mPolicyFunction[,3]
+matrix X = 100* dif ./ mPolicyFunction[,3]
+gnuplot 1 --matrix=X --time --with-lines --output=display
