@@ -1,7 +1,7 @@
 ﻿## Comparison of Programming Languages in Economics
 
 This project contains the source code referenced in the paper [A Comparison of
-Programming Languages in Economics][1] by S. Borağan Aruoba and Jesús
+Programming Languages in Economics][1] with [An Update][2] by S. Borağan Aruoba and Jesús
 Fernández-Villaverde.
 
 The main fork will remain basically unchanged to allow researchers to check our
@@ -59,4 +59,5 @@ basic results.
 In all cases with a JIT, you may want to warm up the JIT before testing for
 speed.
 
-[1]: http://economics.sas.upenn.edu/~jesusfv/comparison_languages.pdf
+[1]: https://www.sas.upenn.edu/~jesusfv/comparison_languages.pdf
+[2]: https://www.sas.upenn.edu/~jesusfv/Update_March_23_2018.pdf
