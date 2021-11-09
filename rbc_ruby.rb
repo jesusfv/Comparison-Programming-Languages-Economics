@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # use --jit or --yjit flags for 2-3x speedup
 start = Time.now
 
