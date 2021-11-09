@@ -107,4 +107,4 @@ end
 
 puts "Iteration = #{iteration}, Sup Diff = #{max_difference}"
 puts "My Check = #{mpolicy_function[999][2]}"
-puts Time.now - start
+puts "Time elapsed = #{Time.now - start}"
