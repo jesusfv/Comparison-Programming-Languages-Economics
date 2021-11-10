@@ -3,7 +3,7 @@
 # use --jit or --yjit flags for 2-3x speedup
 start = Time.now
 
-aalpha = 0.33333
+aalpha = 1 / 3.0
 bbeta = 0.95
 
 vproductivity = [0.9792, 0.9896, 1.0000, 1.0106, 1.0212]
@@ -20,12 +20,6 @@ consumption_steady_state = output_steady_state - capital_steady_state
 
 puts "Output = #{output_steady_state}. Capital = #{capital_steady_state}.  Consumption = #{consumption_steady_state}."
 
-ncapital = 0
-ncapital_next_period = 0
-grid_capital_next_period = 0
-nproductivity = 0
-nproductivity_next_period = 0
-
 vgrid_capital = ((0.5 * capital_steady_state)..(1.5 * capital_steady_state)).step(0.00001).to_a
 ngrid_capital = vgrid_capital.length
 ngrid_productivity = vproductivity.length
@@ -36,12 +30,13 @@ mvalue_function_new = Array.new(ngrid_capital) { Array.new(ngrid_productivity, 0
 mpolicy_function = Array.new(ngrid_capital) { Array.new(ngrid_productivity, 0) }
 expected_value_function = Array.new(ngrid_capital) { Array.new(ngrid_productivity, 0) }
 
-for nproductivity in (0...ngrid_productivity) do
-  for ncapital in (0...ngrid_capital) do
+(0...ngrid_productivity).each do |nproductivity|
+  (0...ngrid_capital).each do |ncapital|
     moutput[ncapital][nproductivity] = vproductivity[nproductivity] * vgrid_capital[ncapital]**aalpha
   end
 end
 
+grid_capital_next_period = 0
 max_difference = 10.0
 diff = 10.0
 diff_high_so_far = 10.0
@@ -52,26 +47,26 @@ value_provisional = 0.0
 consumption = 0.0
 capital_choice = 0.0
 
-while max_difference > tolerance do
+while max_difference > tolerance
 
-  for nproductivity in (0...ngrid_productivity) do
-    for ncapital in (0...ngrid_capital) do
+  (0...ngrid_productivity).each do |nproductivity|
+    (0...ngrid_capital).each do |ncapital|
       expected_value_function[ncapital][nproductivity] = 0.0
-      for nproductivity_next_period in (0...ngrid_productivity) do
+      (0...ngrid_productivity).each do |nproductivity_next_period|
         expected_value_function[ncapital][nproductivity] += mtransition[nproductivity][nproductivity_next_period] * mvalue_function[ncapital][nproductivity_next_period]
       end
     end
   end
 
-  for nproductivity in (0...ngrid_productivity) do
+  (0...ngrid_productivity).each do |nproductivity|
     grid_capital_next_period = 0
-    for ncapital in (0...ngrid_capital) do
+    (0...ngrid_capital).each do |ncapital|
       value_high_so_far = -100_000.0
       capital_choice = vgrid_capital[0]
-      for ncapital_next_period in (grid_capital_next_period...ngrid_capital) do
+      (grid_capital_next_period...ngrid_capital).each do |ncapital_next_period|
         consumption = moutput[ncapital][nproductivity] - vgrid_capital[ncapital_next_period]
         value_provisional = (1 - bbeta) * Math.log(consumption) + bbeta * expected_value_function[ncapital_next_period][nproductivity]
-        if value_provisional > value_high_so_far then
+        if value_provisional > value_high_so_far
           value_high_so_far = value_provisional
           capital_choice = vgrid_capital[ncapital_next_period]
           grid_capital_next_period = ncapital_next_period
@@ -86,10 +81,10 @@ while max_difference > tolerance do
 
   diff_high_so_far = -100_000.0
 
-  for nproductivity in (0...ngrid_productivity) do
-    for ncapital in (0...ngrid_capital) do
+  (0...ngrid_productivity).each do |nproductivity|
+    (0...ngrid_capital).each do |ncapital|
       diff = (mvalue_function[ncapital][nproductivity] - mvalue_function_new[ncapital][nproductivity]).abs
-      if diff > diff_high_so_far then
+      if diff > diff_high_so_far
         diff_high_so_far = diff
       end
       mvalue_function[ncapital][nproductivity] = mvalue_function_new[ncapital][nproductivity]
@@ -97,9 +92,9 @@ while max_difference > tolerance do
   end
 
   max_difference = diff_high_so_far
-  iteration = iteration + 1
+  iteration += 1
 
-  if iteration % 10 == 0 or iteration == 1 then
+  if (iteration % 10).zero? || iteration.equal?(1)
     puts "Iteration = #{iteration}, Sup Diff = #{max_difference}"
   end
 
