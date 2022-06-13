@@ -55,7 +55,7 @@ while maxDifference > tolerance:
   for nProductivity in 0..<nGridProductivity:
     gridCapitalNextPeriod = 0
 
-    for nCapital in 0..<nGridCapital-1:
+    for nCapital in 0..<nGridCapital:
       valueHighSoFar = -100000.0
       capitalChoice = vGridCapital[0]
 
